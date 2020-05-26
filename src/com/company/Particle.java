@@ -1,4 +1,5 @@
 package com.company;
+
 import processing.core.PApplet;
 class Particle {
 
@@ -30,7 +31,7 @@ class Particle {
         xVelocity = p.random(-2, 2);
         yVelocity = p.random(-4, 0);
         c = p.color(p.random(100, 255), p.random(100, 255), p.random(100, 255), 75);
-        size = p.random(2, 10);
+        size = p.random(10, 35);
     }
 
     void draw() {
@@ -43,6 +44,10 @@ class Particle {
         x += xVelocity;
         y += yVelocity;
         yVelocity += ACCELERATION;
+    }
+
+    public void setColor(int red, int green, int blue, int opacity) {
+        this.c = p.color(red, green, blue, opacity);
     }
 
 }

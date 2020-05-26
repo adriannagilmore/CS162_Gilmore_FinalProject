@@ -1,6 +1,6 @@
 package com.company;
+
 import processing.core.PApplet;
-import java.util.Random;
 
 public abstract class Person {
     /*This class will store the behaviors for
@@ -15,18 +15,43 @@ public abstract class Person {
 
     It will also use a counter object
      */
-    Random randomX = new Random(500); //see if this is right
-    //PApplet sketch = new PApplet();
-    int x, y;
+    int xStart, xEnd, yStart,yEnd;
     ParticleSystem particles;
 
-    public Person(int x, int y, PApplet p) {
-        particles = new ParticleSystem(x,y, p);
+    public Person(PApplet p) {
+        particles = new ParticleSystem(xStart, xEnd,yStart,yEnd, p);
+    }
+
+    public Person(int xStart, int xEnd, int yStart, int yEnd, PApplet p) {
+        particles = new ParticleSystem(xStart,xEnd,yStart,yEnd, p);
     }
 
     public void draw() {
         particles.draw();
     }
+
+    public void move() {
+        particles.update();
+    }
+
+    public void setXStart(int x) {
+        this.xStart = x;
+    }
+     public int getXStart() {
+        return this.xStart;
+     }
+
+     public void setYStart(int y) {
+        this.yStart = y;
+     }
+
+     public int getYStart() {
+        return this.yStart;
+     }
+
+     public void setColor(int red, int green, int blue, int opacity) {
+        particles.setColor(red, green, blue, opacity);
+     }
 
 
 }
