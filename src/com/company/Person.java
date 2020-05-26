@@ -16,6 +16,17 @@ public abstract class Person {
     It will also use a counter object
      */
     Random randomX = new Random(500); //see if this is right
-    PApplet sketch = new PApplet();
-    ParticleSystem p = new ParticleSystem(sketch);
+    //PApplet sketch = new PApplet();
+    int x, y;
+    ParticleSystem particles;
+
+    public Person(int x, int y, PApplet p) {
+        particles = new ParticleSystem(x,y, p);
+    }
+
+    public void draw() {
+        particles.draw();
+    }
+
+
 }
