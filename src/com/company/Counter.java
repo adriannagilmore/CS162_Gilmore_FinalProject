@@ -1,5 +1,8 @@
 package com.company;
 
+import processing.core.PApplet;
+import processing.core.PConstants;
+
 public class Counter {
     int startNum;
 
@@ -19,8 +22,10 @@ public class Counter {
         return startNum -= 1;
     }
 
-    //work on actually displaying this in draw screen
-    public String display(String displayText) {
-        return displayText +": " + startNum;
+    public void display(String displayText, int x, int y, PApplet p) {
+        p.fill(0);
+        p.textSize(40);
+        p.textAlign(PConstants.CENTER);
+        p.text(displayText +": " + startNum, x, y);
     }
 }

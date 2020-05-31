@@ -1,12 +1,14 @@
 import com.company.Human;
 import com.company.Zombie;
+import com.company.Counter;
 import processing.core.PApplet;
 import java.util.ArrayList;
 
 public class Sketch extends PApplet{
     ArrayList<Human> humans;
     ArrayList<Zombie> zombies;
-    Human human;
+    Counter humanCounter;
+    Counter zombieCounter;
 
     public void settings() {
         size(800,500);
@@ -18,11 +20,14 @@ public class Sketch extends PApplet{
         zombies = new ArrayList<Zombie>();
         addZombies();
 
-        human = new Human(50,100,50,this);
+        humanCounter = new Counter(humans.size());
+        zombieCounter = new Counter(zombies.size());
     }
 
     public void draw() {
         background(255);
+        humanCounter.display("Humans",width/2, height -50, this);
+        zombieCounter.display("Zombies",width/2, 50+40, this);
         for (Human human : humans) {
             //pink
             human.setColor(255,127,156, (int)random(50,100),this);
@@ -37,19 +42,17 @@ public class Sketch extends PApplet{
             zombie.move(this);
         }
 
-        //human.draw(this);
-        //human.move(this);
     }
 
     public void addHumans() {
         for(int i = 0; i < (int)random(50,100); ++i) {
-            humans.add(new Human((int)random(25,475),(int)random(325,475), (int)random(25,50),this));
+            humans.add(new Human((int)random(25,width-25),(int)random(325,475), (int)random(25,50),this));
         }
     }
 
     public void addZombies() {
-        for(int i = 0; i < (int)random(50,100); ++i) {
-            zombies.add(new Zombie((int)random(25,475),(int)random(25,175), (int)random(25,50),this));
+        for(int i = 0; i < (int)random(50,200); ++i) {
+            zombies.add(new Zombie((int)random(25,width-25),(int)random(25,175), (int)random(25,50),this));
         }
     }
 

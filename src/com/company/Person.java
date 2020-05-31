@@ -20,7 +20,6 @@ public abstract class Person {
     final static double PROB_RIGHT = 0.30;
     final static double PROB_LEFT = 0.30;
     final static double PROB_UP = 0.40;
-    final static double PROB_DOWN = 0.20;
 
     public Person(float x, float y, float radius, PApplet p) {
         p = new PApplet();

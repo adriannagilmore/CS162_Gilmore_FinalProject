@@ -12,13 +12,13 @@ public class Zombie extends Person {
     public void move(PApplet p) {
         double r = p.random(1);
         if (r<=PROB_RIGHT) {
-            this.x++;
+            x++;
         } else if (r<=PROB_LEFT + PROB_RIGHT) {
-            this.x--;
-        } else if (r <= PROB_LEFT + PROB_RIGHT + PROB_DOWN) {
-            this.y--;
+            x--;
+        } else if (r <= PROB_LEFT + PROB_RIGHT + PROB_UP) {
+            y++;
         } else {
-            this.y++;
+            y--;
         }
     }
 }
