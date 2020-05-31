@@ -31,7 +31,7 @@ class Particle {
         xVelocity = p.random(-2, 2);
         yVelocity = p.random(-4, 0);
         c = p.color(p.random(100, 255), p.random(100, 255), p.random(100, 255), 75);
-        size = p.random(10, 35);
+        size = p.random(5, 35);
     }
 
     void draw() {

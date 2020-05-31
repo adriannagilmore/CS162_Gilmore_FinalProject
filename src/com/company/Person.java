@@ -13,45 +13,47 @@ public abstract class Person {
 
     It will need to use the particle system to represent them.
 
-    It will also use a counter object
-     */
-    int xStart, xEnd, yStart,yEnd;
-    ParticleSystem particles;
+    */
+    PApplet p;
+    float x,y, radius;
+    private int color;
+    final static double PROB_RIGHT = 0.30;
+    final static double PROB_LEFT = 0.30;
+    final static double PROB_UP = 0.40;
+    final static double PROB_DOWN = 0.20;
 
-    public Person(PApplet p) {
-        particles = new ParticleSystem(xStart, xEnd,yStart,yEnd, p);
+    public Person(float x, float y, float radius, PApplet p) {
+        p = new PApplet();
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
     }
 
-    public Person(int xStart, int xEnd, int yStart, int yEnd, PApplet p) {
-        particles = new ParticleSystem(xStart,xEnd,yStart,yEnd, p);
+    public void setColor(int red, int green, int blue, int alpha, PApplet p) {
+       this.color = p.color(red, green, blue, alpha);
     }
 
-    public void draw() {
-        particles.draw();
+    public int getColor() {
+        return this.color;
     }
 
-    public void move() {
-        particles.update();
+    public void draw(PApplet p) {
+        p.fill(getColor());
+        p.circle(this.x, this.y,this.radius);
     }
 
-    public void setXStart(int x) {
-        this.xStart = x;
+    public void move(PApplet p) {
+        double r = p.random(1);
+        if (r<=PROB_RIGHT) {
+            this.x++;
+        } else if (r<=PROB_LEFT + PROB_RIGHT) {
+            this.x--;
+        } else if (r <= PROB_LEFT + PROB_RIGHT + PROB_UP) {
+            this.y--;
+        } else {
+            this.y++;
+        }
     }
-     public int getXStart() {
-        return this.xStart;
-     }
-
-     public void setYStart(int y) {
-        this.yStart = y;
-     }
-
-     public int getYStart() {
-        return this.yStart;
-     }
-
-     public void setColor(int red, int green, int blue, int opacity) {
-        particles.setColor(red, green, blue, opacity);
-     }
 
 
 }
