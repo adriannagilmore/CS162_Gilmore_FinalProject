@@ -3,29 +3,32 @@ package com.company;
 import processing.core.PApplet;
 
 public abstract class Person {
-    /*This class will store the behaviors for
-    both humans and zombies.
-    Behaviors include:
-        forward random motion
-        size (small, medium, larger)
-        color (maybe abstract so it can be overridden)
-        probabilities based on size (being a zombie will lower the probabilities of success)
-
-    It will need to use the particle system to represent them.
-
-    */
     PApplet p;
     float x,y, radius;
     private int color;
     final static double PROB_RIGHT = 0.30;
     final static double PROB_LEFT = 0.30;
     final static double PROB_UP = 0.40;
+    processing.core.PVector position;
 
     public Person(float x, float y, float radius, PApplet p) {
         p = new PApplet();
         this.x = x;
         this.y = y;
         this.radius = radius;
+        position = new processing.core.PVector(x, y);
+    }
+
+    public float getX() {
+        return this.x;
+    }
+
+    public float getY() {
+        return this.y;
+    }
+
+    public float getRadius() {
+        return this.radius;
     }
 
     public void setColor(int red, int green, int blue, int alpha, PApplet p) {
@@ -52,6 +55,24 @@ public abstract class Person {
         } else {
             this.y++;
         }
+    }
+
+    public int detectSize() {
+        if (this.radius < 32) {
+            return 0;
+        } else if (this.radius >= 32 && this.radius <= 42) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+    public boolean isLarger(Person peep) {
+        return (this.detectSize() > peep.detectSize());
+    }
+
+    public boolean touching (Person person, PApplet p) {
+        return (p.dist(this.getX(), this.getY(), person.getX(),person.getY())<person.getRadius()+this.getRadius());
     }
 
 

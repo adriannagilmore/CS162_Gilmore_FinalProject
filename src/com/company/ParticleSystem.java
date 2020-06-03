@@ -4,15 +4,15 @@ import processing.core.PApplet;
 import java.util.ArrayList;
 
 
-class ParticleSystem {
+public class ParticleSystem {
 
     final int NUMBER_OF_PARTICLES = 100;
     ArrayList<Particle> particles;
     PApplet pap = new PApplet();
-    int x;
-    int y;
+    float x;
+    float y;
 
-    ParticleSystem(PApplet p) {
+   public ParticleSystem(PApplet p) {
         particles = new ArrayList<Particle>();
         x = p.width / 2;
         y = p.height / 2;
@@ -21,7 +21,7 @@ class ParticleSystem {
         }
     }
 
-    ParticleSystem(int x, int y, PApplet p) {
+    public ParticleSystem(float x, float y, PApplet p) {
         this.x = x;
         this.y = y;
         particles = new ArrayList<Particle>();
@@ -30,13 +30,13 @@ class ParticleSystem {
         }
     }
 
-    void update() {
+    public void update() {
         for (Particle p : particles) {
             p.move();
         }
     }
 
-    void draw() {
+    public void draw() {
         for (Particle p : particles) p.draw();
     }
 
