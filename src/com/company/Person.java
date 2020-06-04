@@ -1,14 +1,18 @@
 package com.company;
 
 import processing.core.PApplet;
+import java.util.ArrayList;
 
 public abstract class Person {
     PApplet p;
     float x,y, radius;
     private int color;
+    private double probability;
     final static double PROB_RIGHT = 0.30;
     final static double PROB_LEFT = 0.30;
     final static double PROB_UP = 0.40;
+    public static int count;
+    private ArrayList<ParticleSystem> particleSystems;
     processing.core.PVector position;
 
     public Person(float x, float y, float radius, PApplet p) {
@@ -17,6 +21,11 @@ public abstract class Person {
         this.y = y;
         this.radius = radius;
         position = new processing.core.PVector(x, y);
+        count++;
+    }
+
+    public int getCount() {
+        return count;
     }
 
     public float getX() {
@@ -72,7 +81,54 @@ public abstract class Person {
     }
 
     public boolean touching (Person person, PApplet p) {
-        return (p.dist(this.getX(), this.getY(), person.getX(),person.getY())<person.getRadius()+this.getRadius());
+        boolean x = false;
+        if (this.getClass() != person.getClass()) {
+            x = (p.dist(this.getX(), this.getY(), person.getX(), person.getY()) < person.getRadius() + this.getRadius());
+        }
+        return x;
+    }
+
+    public double prob(Person person, PApplet p) {
+        if (touching(person, p)) {
+            if (person instanceof Zombie) {
+                //comparing human to zombie
+                if (isLarger(person)) {
+                    probability = 0.85;
+                } else {
+                    probability = 0.60;
+                }
+            } else if (person instanceof Human) {
+                //comparing zombie to human
+                if (isLarger(person)) {
+                    probability = 0.50;
+                } else {
+                    probability = 0.30;
+                }
+            }
+        }
+        return probability;
+    }
+
+    public void outcomes(Person person, PApplet p, ArrayList<Person> people) {
+        double randomSelect = p.random(1);
+        if (randomSelect > prob(person, p)) {
+            //explosions(person.getX(),person.getY(),p);
+            people.remove(person);
+        } if (randomSelect < prob(person, p)) {
+            //explosions(this.getX(),this.getY(),p);
+            people.remove(this);
+        }
+    }
+
+    public void explosions(float x, float y, PApplet p)  {
+        particleSystems.add(new ParticleSystem(x,y,p));
+    }
+
+    public void drawExplosions() {
+        for (ParticleSystem p : particleSystems) {
+            p.draw();
+            p.update();
+        }
     }
 
 
