@@ -97,7 +97,7 @@ public abstract class Person {
                 } else {
                     probability = 0.60;
                 }
-            } else if (person instanceof Human) {
+            }else if (person instanceof Human) {
                 //comparing zombie to human
                 if (isLarger(person)) {
                     probability = 0.50;
@@ -111,13 +111,14 @@ public abstract class Person {
 
     public void outcomes(Person person, PApplet p, ArrayList<Person> people) {
         double randomSelect = p.random(1);
-        if (randomSelect > prob(person, p)) {
-            //explosions(person.getX(),person.getY(),p);
+        if (randomSelect >= prob(person, p)) {
+                //explosions(person.getX(),person.getY(),p);
             people.remove(person);
-        } if (randomSelect < prob(person, p)) {
-            //explosions(this.getX(),this.getY(),p);
+        } else {
+                //explosions(this.getX(),this.getY(),p);
             people.remove(this);
         }
+       // break;
     }
 
     public void explosions(float x, float y, PApplet p)  {
