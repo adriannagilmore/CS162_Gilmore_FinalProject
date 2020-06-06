@@ -4,29 +4,23 @@ import processing.core.PApplet;
 import java.util.ArrayList;
 
 public abstract class Person {
-    PApplet p;
-    float x,y, radius;
+    private PApplet p;
+    protected float x,y, radius;
     private int color;
     private double probability;
-    final static double PROB_RIGHT = 0.30;
-    final static double PROB_LEFT = 0.30;
-    final static double PROB_UP = 0.40;
-    public static int count;
+    protected final static double PROB_RIGHT = 0.30;
+    protected final static double PROB_LEFT = 0.30;
+    protected static double PROB_UP = 0.40;
     private ArrayList<ParticleSystem> particleSystems;
-    processing.core.PVector position;
 
     public Person(float x, float y, float radius, PApplet p) {
         p = new PApplet();
         this.x = x;
         this.y = y;
         this.radius = radius;
-        position = new processing.core.PVector(x, y);
-        count++;
     }
 
-    public int getCount() {
-        return count;
-    }
+    public abstract int getCount();
 
     public float getX() {
         return this.x;
@@ -83,7 +77,7 @@ public abstract class Person {
     public boolean touching (Person person, PApplet p) {
         boolean x = false;
         if (this.getClass() != person.getClass()) {
-            x = (p.dist(this.getX(), this.getY(), person.getX(), person.getY()) < person.getRadius() + this.getRadius());
+            x = (p.dist(this.getX(), this.getY(), person.getX(), person.getY()) < person.getRadius()/2 + this.getRadius()/2);
         }
         return x;
     }
@@ -111,14 +105,15 @@ public abstract class Person {
 
     public void outcomes(Person person, PApplet p, ArrayList<Person> people) {
         double randomSelect = p.random(1);
-        if (randomSelect >= prob(person, p)) {
+        if (touching(person, p)) {
+            if (randomSelect >= prob(person, p)) {
                 //explosions(person.getX(),person.getY(),p);
-            people.remove(person);
-        } else {
+                people.remove(person);
+            } else {
                 //explosions(this.getX(),this.getY(),p);
-            people.remove(this);
+                people.remove(this);
+            }
         }
-       // break;
     }
 
     public void explosions(float x, float y, PApplet p)  {

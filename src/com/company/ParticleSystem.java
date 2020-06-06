@@ -8,7 +8,6 @@ public class ParticleSystem {
 
     final int NUMBER_OF_PARTICLES = 100;
     ArrayList<Particle> particles;
-    PApplet pap = new PApplet();
     float x;
     float y;
 
