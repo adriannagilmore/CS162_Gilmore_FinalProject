@@ -53,9 +53,11 @@ public class Sketch extends PApplet{
                 if (person.touching(person2, this)) {
                     textSize(35);
                     text("it is touching", 100, 100);
+                    println("circles are touching");
 
-                    person.prob(person2, this);
-
+                   // person.prob(person2, this);
+                    person.outcomes(person2, this, people);
+                    /*
                     double randomSelect = random(1);
                     if (randomSelect >= person.prob(person2, this)) {
                         //explosions(person.getX(),person.getY(),p);
@@ -63,20 +65,20 @@ public class Sketch extends PApplet{
                     } else {
                         //explosions(this.getX(),this.getY(),p);
                         people.remove(person2);
-                    }
+                    }*/
+                    break;
                 }
-                break;
             }
             break;
         }
     }
 
     public void addPeople() {
-        for(int i = 0; i < /*(int)random(50,100)*/1; ++i) {
-            people.add(new Human(/*(int)random(25,width-25)*/100,(int)random(325,475), (int)random(25,50),this));
+        for(int i = 0; i < (int)random(50); ++i) {
+            people.add(new Human((int)random(25,width-25),(int)random(325,475), (int)random(25,50),this));
         }
-        for(int i = 0; i < /*(int)random(50,200)*/1; ++i) {
-            people.add(new Zombie(/*(int)random(25,width-25)*/100,(int)random(25,175), (int)random(25,50),this));
+        for(int i = 0; i < (int)random(50); ++i) {
+            people.add(new Zombie((int)random(25,width-25),(int)random(25,175), (int)random(25,50),this));
         }
     }
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public abstract class Person {
     private PApplet p;
-    protected float x,y, radius;
+    protected float x,y, diameter;
     private int color;
     private double probability;
     protected final static double PROB_RIGHT = 0.30;
@@ -13,11 +13,11 @@ public abstract class Person {
     protected static double PROB_UP = 0.40;
     private ArrayList<ParticleSystem> particleSystems;
 
-    public Person(float x, float y, float radius, PApplet p) {
+    public Person(float x, float y, float diameter, PApplet p) {
         p = new PApplet();
         this.x = x;
         this.y = y;
-        this.radius = radius;
+        this.diameter = diameter;
     }
 
     public abstract int getCount();
@@ -31,7 +31,7 @@ public abstract class Person {
     }
 
     public float getRadius() {
-        return this.radius;
+        return this.diameter/2;
     }
 
     public void setColor(int red, int green, int blue, int alpha, PApplet p) {
@@ -44,7 +44,7 @@ public abstract class Person {
 
     public void draw(PApplet p) {
         p.fill(getColor());
-        p.circle(this.x, this.y,this.radius);
+        p.circle(this.x, this.y,this.diameter);
     }
 
     public void move(PApplet p) {
@@ -61,9 +61,9 @@ public abstract class Person {
     }
 
     public int detectSize() {
-        if (this.radius < 32) {
+        if (this.diameter < 32) {
             return 0;
-        } else if (this.radius >= 32 && this.radius <= 42) {
+        } else if (this.diameter >= 32 && this.diameter <= 42) {
             return 1;
         } else {
             return 2;
@@ -77,21 +77,21 @@ public abstract class Person {
     public boolean touching (Person person, PApplet p) {
         boolean x = false;
         if (this.getClass() != person.getClass()) {
-            x = (p.dist(this.getX(), this.getY(), person.getX(), person.getY()) < person.getRadius()/2 + this.getRadius()/2);
+            x = (p.dist(this.getX(), this.getY(), person.getX(), person.getY()) < person.getRadius() + this.getRadius());
         }
         return x;
     }
 
     public double prob(Person person, PApplet p) {
         if (touching(person, p)) {
-            if (person instanceof Zombie) {
+            if (person.getClass() == Zombie.class) {
                 //comparing human to zombie
                 if (isLarger(person)) {
                     probability = 0.85;
                 } else {
                     probability = 0.60;
                 }
-            }else if (person instanceof Human) {
+            }else if (person.getClass() == Human.class) {
                 //comparing zombie to human
                 if (isLarger(person)) {
                     probability = 0.50;
@@ -105,15 +105,15 @@ public abstract class Person {
 
     public void outcomes(Person person, PApplet p, ArrayList<Person> people) {
         double randomSelect = p.random(1);
-        if (touching(person, p)) {
             if (randomSelect >= prob(person, p)) {
                 //explosions(person.getX(),person.getY(),p);
                 people.remove(person);
+                System.out.println("A person should be removed. Probability >= random select");
             } else {
                 //explosions(this.getX(),this.getY(),p);
                 people.remove(this);
+                System.out.println("A person should be removed. Probability < random select");
             }
-        }
     }
 
     public void explosions(float x, float y, PApplet p)  {
