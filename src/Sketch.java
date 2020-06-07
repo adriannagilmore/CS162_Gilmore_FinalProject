@@ -1,3 +1,9 @@
+/**
+ * @author Adrianna Gilmore
+ * @version 1
+ * This class creates the drawing canvas and draws the simulation.
+ */
+
 import com.company.Human;
 import com.company.Zombie;
 import com.company.Counter;
@@ -15,10 +21,16 @@ public class Sketch extends PApplet{
     double probability;
     double randomSelect;
 
+    /**
+     * Display settings.
+     */
     public void settings() {
         size(800,500);
     }
 
+    /**
+     * Sets up the drawing canvas.
+     */
     public void setup() {
         people = new ArrayList<Person>();
         addPeople();
@@ -30,6 +42,9 @@ public class Sketch extends PApplet{
 
     }
 
+    /**
+     * Draws to the canvas.
+     */
     public void draw() {
         background(255);
         setColor();
@@ -61,6 +76,9 @@ public class Sketch extends PApplet{
         }
     }
 
+    /**
+     * Adds people to the array list of people.
+     */
     public void addPeople() {
         for(int i = 0; i < /*(int)random(25)*/10; ++i) {
             people.add(new Human((int)random(600,width-25),(int)random(325,475), (int)random(25,50),this));
@@ -70,6 +88,11 @@ public class Sketch extends PApplet{
         }
     }
 
+    /**
+     * Counts the people in the array list based on the type of person.
+     * @param className
+     * @return x
+     */
     public int countPeople(Class<?> className) {
         int x = 0;
         for (Person p: people) {
@@ -80,6 +103,9 @@ public class Sketch extends PApplet{
         return x;
     }
 
+    /**
+     * Sets the color of the people based on the type of people.
+     */
     public void setColor () {
         for (Person person : people) {
             if (person.getClass() == Human.class) {

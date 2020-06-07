@@ -1,3 +1,8 @@
+/**
+ * @author Adrianna Gilmore
+ * @version 1
+ * This class creates a particle object in the shape of a circle.
+ */
 package com.company;
 
 import processing.core.PApplet;
@@ -15,6 +20,10 @@ public class Particle {
     int c;
     float size;
 
+    /**
+     * Constructor
+     * @param p : type PApplet
+     */
     public Particle(PApplet p) {
         x = p.mouseX;
         y = p.mouseY;
@@ -25,6 +34,12 @@ public class Particle {
         size = p.random(5, 15);
     }
 
+    /**
+     * Constructor
+     * @param x : type float
+     * @param y : type float
+     * @param p : type PApplet
+     */
     public Particle(float x, float y, PApplet p) {
         this.x = x;
         this.y = y;
@@ -35,18 +50,31 @@ public class Particle {
         size = p.random(5, 15);
     }
 
+    /**
+     * Draws particle.
+     */
     public void draw() {
         p.stroke(150);
         p.fill(c);
         p.ellipse(x, y, size, size);
     }
 
+    /**
+     * Moves particle.
+     */
     public void move() {
         x += xVelocity;
         y += yVelocity;
         yVelocity += ACCELERATION;
     }
 
+    /**
+     * Sets the color of particle.
+     * @param red : type int
+     * @param green : type int
+     * @param blue : type int
+     * @param opacity : type int
+     */
     public void setColor(int red, int green, int blue, int opacity) {
         this.c = p.color(red, green, blue, opacity);
     }
