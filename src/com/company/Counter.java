@@ -22,10 +22,10 @@ public class Counter {
         return startNum -= 1;
     }
 
-    public void display(String displayText, int x, int y, PApplet p) {
+    public void display(String displayText, int count, int x, int y, PApplet p) {
         p.fill(0);
         p.textSize(40);
         p.textAlign(PConstants.CENTER);
-        p.text(displayText +": " + startNum, x, y);
+        p.text(displayText +": " + count, x, y);
     }
 }

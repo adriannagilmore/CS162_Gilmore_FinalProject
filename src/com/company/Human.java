@@ -12,4 +12,8 @@ public class Human extends Person {
     public int getCount() {
         return count;
     }
+
+    public void decrease() {
+        count--;
+    }
 }

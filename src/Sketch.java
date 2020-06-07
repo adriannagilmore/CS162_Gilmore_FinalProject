@@ -22,9 +22,6 @@ public class Sketch extends PApplet{
     public void setup() {
         people = new ArrayList<Person>();
         addPeople();
-        setColor();
-
-
 
         humanCounter = new Counter(countPeople(Human.class));
         zombieCounter = new Counter(countPeople(Zombie.class));
@@ -35,8 +32,9 @@ public class Sketch extends PApplet{
 
     public void draw() {
         background(255);
-        humanCounter.display("Humans", width / 2, height - 50, this);
-        zombieCounter.display("Zombies", width / 2, 50 + 40, this);
+        setColor();
+        humanCounter.display("Humans", Human.count,width / 2, height - 50, this);
+        zombieCounter.display("Zombies", Zombie.count,width / 2, 50 + 40, this);
 
         for (Person person : people) {
             person.draw(this);
@@ -55,17 +53,7 @@ public class Sketch extends PApplet{
                     text("it is touching", 100, 100);
                     println("circles are touching");
 
-                   // person.prob(person2, this);
-                    person.outcomes(person2, this, people);
-                    /*
-                    double randomSelect = random(1);
-                    if (randomSelect >= person.prob(person2, this)) {
-                        //explosions(person.getX(),person.getY(),p);
-                        people.remove(person);
-                    } else {
-                        //explosions(this.getX(),this.getY(),p);
-                        people.remove(person2);
-                    }*/
+                    person.outcomes(person2, this, people, particleSystems);
                     break;
                 }
             }
@@ -74,11 +62,11 @@ public class Sketch extends PApplet{
     }
 
     public void addPeople() {
-        for(int i = 0; i < (int)random(50); ++i) {
-            people.add(new Human((int)random(25,width-25),(int)random(325,475), (int)random(25,50),this));
+        for(int i = 0; i < /*(int)random(25)*/10; ++i) {
+            people.add(new Human((int)random(600,width-25),(int)random(325,475), (int)random(25,50),this));
         }
-        for(int i = 0; i < (int)random(50); ++i) {
-            people.add(new Zombie((int)random(25,width-25),(int)random(25,175), (int)random(25,50),this));
+        for(int i = 0; i < /*(int)random(25)*/12; ++i) {
+            people.add(new Zombie((int)random(600,width-25),(int)random(25,175), (int)random(25,50),this));
         }
     }
 
@@ -92,16 +80,12 @@ public class Sketch extends PApplet{
         return x;
     }
 
-    public void addNewZombie(int x, int y, int r) {
-        people.add(new Zombie(x,y,r, this));
-    }
-
     public void setColor () {
         for (Person person : people) {
-            if (person instanceof Human) {
-                person.setColor(255, 127, 156, (int) random(50, 100), this);
+            if (person.getClass() == Human.class) {
+                person.setColor(255, 127, 156, 75, this);
             } else {
-                person.setColor(63, 244, 208, (int) random(50, 100), this);
+                person.setColor(63, 244, 208, 75, this);
             }
         }
     }

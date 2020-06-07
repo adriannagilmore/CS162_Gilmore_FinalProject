@@ -14,6 +14,10 @@ public class Zombie extends Person {
         return count;
     }
 
+    public void decrease() {
+        count--;
+    }
+
     @Override
     public void move(PApplet p) {
         double r = p.random(1);

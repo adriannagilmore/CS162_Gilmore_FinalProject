@@ -18,9 +18,11 @@ public abstract class Person {
         this.x = x;
         this.y = y;
         this.diameter = diameter;
+        particleSystems = new ArrayList<ParticleSystem>();
     }
 
     public abstract int getCount();
+    public abstract void decrease();
 
     public float getX() {
         return this.x;
@@ -77,7 +79,7 @@ public abstract class Person {
     public boolean touching (Person person, PApplet p) {
         boolean x = false;
         if (this.getClass() != person.getClass()) {
-            x = (p.dist(this.getX(), this.getY(), person.getX(), person.getY()) < person.getRadius() + this.getRadius());
+            x = (p.dist(this.getX(), this.getY(), person.getX(), person.getY()) <= person.getRadius() + this.getRadius());
         }
         return x;
     }
@@ -103,28 +105,35 @@ public abstract class Person {
         return probability;
     }
 
-    public void outcomes(Person person, PApplet p, ArrayList<Person> people) {
+    public void outcomes(Person person, PApplet p, ArrayList<Person> people, ArrayList<ParticleSystem> particles) {
         double randomSelect = p.random(1);
+        double nextRand = p.random(1);
             if (randomSelect >= prob(person, p)) {
-                //explosions(person.getX(),person.getY(),p);
+                explosions(person.getX(),person.getY(),p, particles);
                 people.remove(person);
+                person.decrease();
                 System.out.println("A person should be removed. Probability >= random select");
             } else {
-                //explosions(this.getX(),this.getY(),p);
-                people.remove(this);
-                System.out.println("A person should be removed. Probability < random select");
+                if (nextRand< 0.50) {
+                    people.add( new Zombie(this.getX(), this.getY(), this.diameter, p));
+                    people.remove(this);
+                    this.decrease();
+                    System.out.println("A zombie should be added. Probability < random select");
+                    System.out.println("nextRand = "+ nextRand);
+                } else {
+                    explosions(this.getX(),this.getY(),p, particles);
+                    people.remove(this);
+                    this.decrease();
+                    System.out.println("A Zombie should be removed. Probability < random select");
+                    System.out.println("nextRand = "+ nextRand);
+                }
+
             }
     }
 
-    public void explosions(float x, float y, PApplet p)  {
-        particleSystems.add(new ParticleSystem(x,y,p));
-    }
-
-    public void drawExplosions() {
-        for (ParticleSystem p : particleSystems) {
-            p.draw();
-            p.update();
-        }
+    public void explosions(float x, float y, PApplet p, ArrayList<ParticleSystem> particles)  {
+        particles.add(new ParticleSystem(x,y,p));
+        System.out.println("particle system added");
     }
 
 
