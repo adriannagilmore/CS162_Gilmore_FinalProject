@@ -17,7 +17,6 @@ public abstract class Person {
     protected final static double PROB_RIGHT = 0.30;
     protected final static double PROB_LEFT = 0.30;
     protected static double PROB_UP = 0.40;
-    private ArrayList<ParticleSystem> particleSystems;
 
     /**
      * Constructor
@@ -31,7 +30,6 @@ public abstract class Person {
         this.x = x;
         this.y = y;
         this.diameter = diameter;
-        particleSystems = new ArrayList<ParticleSystem>();
     }
 
     public abstract int getCount();
@@ -152,14 +150,14 @@ public abstract class Person {
      */
     public double prob(Person person, PApplet p) {
         if (touching(person, p)) {
-            if (person.getClass() == Zombie.class) {
+            if (person instanceof Zombie) {
                 //comparing human to zombie
                 if (isLarger(person)) {
                     probability = 0.85;
                 } else {
                     probability = 0.60;
                 }
-            }else if (person.getClass() == Human.class) {
+            }else if (person instanceof Human) {
                 //comparing zombie to human
                 if (isLarger(person)) {
                     probability = 0.50;
@@ -185,20 +183,15 @@ public abstract class Person {
                 explosions(person.getX(),person.getY(),p, particles);
                 people.remove(person);
                 person.decrease();
-                System.out.println("A person should be removed. Probability >= random select");
             } else {
                 if (nextRand< 0.50) {
                     people.add( new Zombie(this.getX(), this.getY(), this.diameter, p));
                     people.remove(this);
                     this.decrease();
-                    System.out.println("A zombie should be added. Probability < random select");
-                    System.out.println("nextRand = "+ nextRand);
                 } else {
                     explosions(this.getX(),this.getY(),p, particles);
                     people.remove(this);
                     this.decrease();
-                    System.out.println("A Zombie should be removed. Probability < random select");
-                    System.out.println("nextRand = "+ nextRand);
                 }
 
             }
@@ -213,8 +206,5 @@ public abstract class Person {
      */
     public void explosions(float x, float y, PApplet p, ArrayList<ParticleSystem> particles)  {
         particles.add(new ParticleSystem(x,y,p));
-        System.out.println("particle system added");
     }
-
-
 }

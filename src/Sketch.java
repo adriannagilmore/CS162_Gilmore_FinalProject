@@ -13,13 +13,10 @@ import processing.core.PApplet;
 import java.util.ArrayList;
 
 public class Sketch extends PApplet{
-    final double EQUAL_ODDS = 0.50;
     ArrayList<Person> people;
     Counter humanCounter;
     Counter zombieCounter;
     ArrayList<ParticleSystem> particleSystems;
-    double probability;
-    double randomSelect;
 
     /**
      * Display settings.
@@ -64,10 +61,6 @@ public class Sketch extends PApplet{
         for (Person person : people) {
             for (Person person2 : people) {
                 if (person.touching(person2, this)) {
-                    textSize(35);
-                    text("it is touching", 100, 100);
-                    println("circles are touching");
-
                     person.outcomes(person2, this, people, particleSystems);
                     break;
                 }
@@ -80,11 +73,11 @@ public class Sketch extends PApplet{
      * Adds people to the array list of people.
      */
     public void addPeople() {
-        for(int i = 0; i < /*(int)random(25)*/10; ++i) {
-            people.add(new Human((int)random(600,width-25),(int)random(325,475), (int)random(25,50),this));
+        for(int i = 0; i < /*(int)random(25)*/15; ++i) {
+            people.add(new Human((int)random(25,width-25),(int)random(325,475), (int)random(25,50),this));
         }
-        for(int i = 0; i < /*(int)random(25)*/12; ++i) {
-            people.add(new Zombie((int)random(600,width-25),(int)random(25,175), (int)random(25,50),this));
+        for(int i = 0; i < /*(int)random(25)*/15; ++i) {
+            people.add(new Zombie((int)random(25,width-25),(int)random(25,175), (int)random(25,50),this));
         }
     }
 

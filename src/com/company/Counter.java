@@ -28,11 +28,11 @@ public class Counter {
 
     /**
      * Displays the counter object on the drawing canvas.
-     * @param displayText
-     * @param count
-     * @param x
-     * @param y
-     * @param p
+     * @param displayText : type String
+     * @param count : type int
+     * @param x : type int
+     * @param y : type int
+     * @param p : type PApplet
      */
     public void display(String displayText, int count, int x, int y, PApplet p) {
         p.fill(0);
